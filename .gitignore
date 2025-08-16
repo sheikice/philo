@@ -15,6 +15,7 @@
 # Executables
 *.exe
 *.out
+philo
 
 
 # Bear
