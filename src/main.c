@@ -1,12 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/16 23:15:35 by jwuille           #+#    #+#             */
+/*   Updated: 2025/08/16 23:16:28 by jwuille          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-void	philo_routine1()
-{
-	//while (not time_to_start)
-		// continue ;
-	//cycle EAT - SLEEP - THINK
-}
-
+// void	philo_routine1()
+// {
+// }
 void	phi_init(t_phi *phi, char **av)
 {
 	struct timeval	time;
@@ -30,14 +38,9 @@ void	phi_init(t_phi *phi, char **av)
 int	main(int ac, char **av)
 {
 	t_phi	phi;
-	
+
 	if (ac < 5 || ac > 6)
 		quit_error(ERR_NB_ARG);
 	phi_init(&phi, av);
-	// mutex_init write
-	// mutex_init fork
-	// philo_creates;
-	// philo attach;
-	// mutex destroy
 	return (EXIT_SUCCESS);
 }

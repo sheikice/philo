@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/16 23:15:45 by jwuille           #+#    #+#             */
+/*   Updated: 2025/08/16 23:15:58 by jwuille          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PHILO_H
 # define PHILO_H
 
 # include <stdio.h>
-#include <sys/select.h>
+# include <sys/select.h>
 # include <unistd.h>
 # include <pthread.h>
 # include <stdlib.h>
-#include <sys/time.h>
+# include <sys/time.h>
 
 # define ERR_NB_ARG "Usage: ./philo [number_of_philosophers] \
 [time_to_die] [time_to_eat] [time_to_sleep] \
