@@ -1,7 +1,7 @@
 # Dining philosophers project
 ![Norminette](https://github.com/sheikice/philo/actions/workflows/norminette.yml/badge.svg?branch=main) ![Build](https://github.com/sheikice/philo/actions/workflows/tests.yml/badge.svg?branch=main)
 
-SUBJECT:
+Subject:
 =
 * Each philo is a THREAD
 * one fork between each pair of philo + each fork protected with a mutex
