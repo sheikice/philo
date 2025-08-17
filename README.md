@@ -1,7 +1,6 @@
 # philo
-Dinning philosopher project
-
 ![Norminette](https://github.com/sheikice/philo/actions/workflows/norminette.yml/badge.svg?branch=main) ![Build](https://github.com/sheikice/philo/actions/workflows/tests.yml/badge.svg?branch=main)
+Dinning philosopher project
 ===============================================================================
 SUBJECT:
 * Each philo is a THREAD
