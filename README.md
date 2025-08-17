@@ -2,6 +2,8 @@
 Dinning philosopher project
 
 
+![Norminette](https://github.com/sheikice/philo/actions/workflows/norminette.yml/badge.svg)
+![Build](https://github.com/sheikice/philo/actions/workflows/tests.yml/badge.svg)
 ===============================================================================
 SUBJECT:
 * Each philo is a THREAD
@@ -21,5 +23,3 @@ gcc -fsanitize=thread -g threads.c && ./a.out
 
 prototype: ./philo [number_of_philosophers] [time_to_die] [time_to_eat] [time_to_sleep] [number_of_times_each_philo_must_eat]
 ==============================================================================
-![Norminette](https://github.com/sheikice/philo/actions/workflows/norminette.yml/badge.svg)
-![Build](https://github.com/sheikice/philo/actions/workflows/tests.yml/badge.svg)
