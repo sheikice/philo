@@ -18,7 +18,7 @@ Subject:
 
 Compile:
 =
-gcc -fsanitize=thread -g threads.c && ./a.out
+make && ./philo
 
 Usage:
 =
