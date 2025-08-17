@@ -1,10 +1,7 @@
 # philo
 Dinning philosopher project
 
-
-![Norminette](https://github.com/sheikice/philo/actions/workflows/norminette.yml/badge.svg?branch=main) ![Norminette dev](https://github.com/sheikice/philo/actions/workflows/norminette.yml/badge.svg?branch=dev)
-
-![Build](https://github.com/sheikice/philo/actions/workflows/tests.yml/badge.svg?branch=main) ![Build dev](https://github.com/sheikice/philo/actions/workflows/tests.yml/badge.svg?branch=dev)
+![Norminette](https://github.com/sheikice/philo/actions/workflows/norminette.yml/badge.svg?branch=main) ![Build](https://github.com/sheikice/philo/actions/workflows/tests.yml/badge.svg?branch=main)
 ===============================================================================
 SUBJECT:
 * Each philo is a THREAD
