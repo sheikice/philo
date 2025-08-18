@@ -6,7 +6,7 @@
 #    By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/14 18:44:28 by jwuille           #+#    #+#              #
-#    Updated: 2025/08/16 22:57:35 by jwuille          ###   ########.fr        #
+#    Updated: 2025/08/18 18:07:52 by jwuille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,9 @@ OBJ_DIR = obj
 
 
 SRC =	quit_error.c \
+		start_simulation.c \
+		ft_atoi.c \
+		check_params.c \
 		main.c
 
 
