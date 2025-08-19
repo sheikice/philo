@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:02:52 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/18 17:44:51 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/19 17:42:49 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,31 @@
 static t_philosoph	*philo_init(t_param param, t_fork *forks)
 {
 	t_philosoph	*philo;
+	int			i;
 
-	(void) forks;
+	i = -1;
 	philo = malloc(sizeof(t_philosoph) * param.number_of_philosophers);
 	if (!philo)
 		quit_error(ERR_MALLOC);
+	memset(philo, 0, sizeof(t_philosoph) * param.number_of_philosophers);
+	while (++i < param.number_of_philosophers)
+	{
+		(philo[i]).nbr = i + 1;
+		(philo[i]).right = &(forks[i]);
+		if (i == param.number_of_philosophers - 1)
+			(philo[i]).left = &(forks[0]);
+		else
+			(philo[i]).left = &(forks[i + 1]);
+		if (pthread_mutex_init(&(philo[i].meal_eaten.meal_lock), NULL) < 0)
+			quit_error(ERR_MUTEX_INIT);
+	}
 	return (philo);
 }
 
 static t_fork	*fork_init(t_param param)
 {
-	t_fork			*forks;
-	unsigned int	i;
+	t_fork	*forks;
+	int		i;
 
 	i = -1;
 	forks = malloc(sizeof(t_fork) * param.number_of_philosophers);
@@ -35,9 +48,11 @@ static t_fork	*fork_init(t_param param)
 	memset(forks, 0, sizeof(t_fork) * param.number_of_philosophers);
 	while (++i < param.number_of_philosophers)
 	{
+		(forks[i]).nbr = i + 1;
 		if (pthread_mutex_init(&(forks[i].fork_lock), NULL) < 0)
 			quit_error(ERR_MUTEX_INIT);
 	}
+	printf("fork init: done.\n");
 	return (forks);
 }
 
@@ -58,6 +73,7 @@ static int	param_init(t_param *param, char **av)
 	if (gettimeofday(&time, NULL) < 0)
 		quit_error(ERR_GET_TIME);
 	param->time_start = time.tv_usec / 1000 + time.tv_sec * 1000 + TIME_START;
+	printf("param init: done.\n");
 	return (1);
 }
 
@@ -72,6 +88,9 @@ int	start_simulation(char **av)
 		quit_error(ERR_INIT);
 	forks = fork_init(param);
 	philos = philo_init(param, forks);
-	(void) philos;
+	if (!thread_run(philos, param))
+		quit_error("Error: threads has just explode\n");
+	free(philos);
+	free(forks);
 	return (1);
 }
