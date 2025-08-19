@@ -1,22 +1,47 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   check_params.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/08/16 23:15:35 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/18 15:06:12 by jwuille          ###   ########.fr       */
+/*   Created: 2025/08/18 16:53:22 by jwuille           #+#    #+#             */
+/*   Updated: 2025/08/18 17:42:15 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int ac, char **av)
+static bool	is_uint(char *arg)
 {
-	if (ac < 5 || ac > 6)
-		quit_error(ERR_NB_ARG);
-	if (start_simulation(av) < 0)
-		quit_error("");
-	return (EXIT_SUCCESS);
+	(void)arg;
+	return (true);
+}
+
+static bool	is_number(char *arg)
+{
+	int	i;
+
+	i = 0;
+	if (arg[i] < '1' || arg[i] > '9')
+		return (false);
+	while (arg[++i])
+	{
+		if (arg[i] < '0' || arg[i] > '9')
+			return (false);
+	}
+	return (true);
+}
+
+bool	check_params(char **av)
+{
+	int	i;
+
+	i = 0;
+	while (av[++i])
+	{
+		if (!is_number(av[i]) || !(is_uint(av[i])))
+			return (false);
+	}
+	return (true);
 }

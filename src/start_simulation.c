@@ -1,0 +1,77 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   start_simulation.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/08/18 15:02:52 by jwuille           #+#    #+#             */
+/*   Updated: 2025/08/18 17:44:51 by jwuille          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "philo.h"
+
+static t_philosoph	*philo_init(t_param param, t_fork *forks)
+{
+	t_philosoph	*philo;
+
+	(void) forks;
+	philo = malloc(sizeof(t_philosoph) * param.number_of_philosophers);
+	if (!philo)
+		quit_error(ERR_MALLOC);
+	return (philo);
+}
+
+static t_fork	*fork_init(t_param param)
+{
+	t_fork			*forks;
+	unsigned int	i;
+
+	i = -1;
+	forks = malloc(sizeof(t_fork) * param.number_of_philosophers);
+	if (!forks)
+		quit_error(ERR_MALLOC);
+	memset(forks, 0, sizeof(t_fork) * param.number_of_philosophers);
+	while (++i < param.number_of_philosophers)
+	{
+		if (pthread_mutex_init(&(forks[i].fork_lock), NULL) < 0)
+			quit_error(ERR_MUTEX_INIT);
+	}
+	return (forks);
+}
+
+static int	param_init(t_param *param, char **av)
+{
+	struct timeval	time;
+
+	param->number_of_philosophers = ft_atoi(av[1]);
+	if (param->number_of_philosophers < 1)
+		quit_error(ERR_NBR_PHILOSOPH);
+	param->time_to_die = ft_atoi(av[2]);
+	param->time_to_eat = ft_atoi(av[3]);
+	param->time_to_sleep = ft_atoi(av[4]);
+	if (av[5])
+		param->number_of_times_each_philo_must_eat = ft_atoi(av[5]);
+	else
+		param->number_of_times_each_philo_must_eat = 0;
+	if (gettimeofday(&time, NULL) < 0)
+		quit_error(ERR_GET_TIME);
+	param->time_start = time.tv_usec / 1000 + time.tv_sec * 1000 + TIME_START;
+	return (1);
+}
+
+int	start_simulation(char **av)
+{
+	t_param		param;
+	t_fork		*forks;
+	t_philosoph	*philos;
+
+	memset(&param, 0, sizeof(t_param));
+	if (!check_params(av) || !param_init(&param, av))
+		quit_error(ERR_INIT);
+	forks = fork_init(param);
+	philos = philo_init(param, forks);
+	(void) philos;
+	return (1);
+}
