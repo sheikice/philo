@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:15:45 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/19 13:48:25 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/19 17:22:50 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,12 @@
 
 typedef struct s_param
 {
-	unsigned int	number_of_philosophers;
-	unsigned int	time_start;
-	unsigned int	time_to_die;
-	unsigned int	time_to_eat;
-	unsigned int	time_to_sleep;
-	unsigned int	number_of_times_each_philo_must_eat;
+	int	number_of_philosophers;
+	int	time_start;
+	int	time_to_die;
+	int	time_to_eat;
+	int	time_to_sleep;
+	int	number_of_times_each_philo_must_eat;
 }	t_param;
 
 typedef struct s_fork
@@ -70,5 +70,6 @@ void	quit_error(char *str);
 int		start_simulation(char **av);
 int		ft_atoi(const char *str);
 bool	check_params(char **av);
+bool	thread_run(t_philosoph *philo, t_param param);
 
 #endif

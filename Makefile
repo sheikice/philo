@@ -6,7 +6,7 @@
 #    By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/14 18:44:28 by jwuille           #+#    #+#              #
-#    Updated: 2025/08/18 18:07:52 by jwuille          ###   ########.fr        #
+#    Updated: 2025/08/19 17:23:31 by jwuille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRC =	quit_error.c \
 		start_simulation.c \
 		ft_atoi.c \
 		check_params.c \
+		thread_run.c \
 		main.c
 
 
