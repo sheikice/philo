@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:15:45 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/18 17:46:02 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/19 13:48:25 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,19 @@ typedef struct s_param
 
 typedef struct s_fork
 {
-	int				nbr;//from 1 to n
+	int				nbr;
 	pthread_mutex_t	fork_lock;
 }	t_fork;
 
 typedef struct s_meal_eaten
 {
-	int				nbr;//from 1 to n
+	int				nbr;
 	pthread_mutex_t	meal_lock;
 }	t_meal_eaten;
 
 typedef struct s_philosoph
 {
-	int				nbr;//from 1 to n
+	int				nbr;
 	t_meal_eaten	meal_eaten;
 	t_fork			*left;
 	t_fork			*right;
