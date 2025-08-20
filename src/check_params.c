@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 16:53:22 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/19 17:41:44 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/20 21:29:28 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static bool	is_number(char *arg)
 	int	i;
 
 	i = 0;
-	if (arg[i] < '1' || arg[i] > '9')
+	if (!(arg[i] > '0' && arg[i] <= '9') && !(arg[i] == '0' && !(arg[i + 1])))
 		return (false);
 	while (arg[++i])
 	{
