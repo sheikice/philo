@@ -6,7 +6,7 @@
 #    By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/14 18:44:28 by jwuille           #+#    #+#              #
-#    Updated: 2025/08/20 16:00:26 by jwuille          ###   ########.fr        #
+#    Updated: 2025/08/20 16:36:11 by jwuille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRC =	quit_error.c \
 		thread_run.c \
 		free_memory.c \
 		routine.c \
+		print_time.c \
 		main.c
 
 

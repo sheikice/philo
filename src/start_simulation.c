@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:02:52 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/20 15:56:46 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/20 16:39:27 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ static int	param_init(t_param *param, char **av)
 	param->number_of_philosophers = ft_atoi(av[1]);
 	if (param->number_of_philosophers < 1)
 		quit_error(ERR_NBR_PHILOSOPH);
-	param->time_to_die = ft_atoi(av[2]);
-	param->time_to_eat = ft_atoi(av[3]);
-	param->time_to_sleep = ft_atoi(av[4]);
+	param->time_to_die = ft_atoi(av[2]) * 1000;
+	param->time_to_eat = ft_atoi(av[3]) * 1000;
+	param->time_to_sleep = ft_atoi(av[4]) * 1000;
 	if (av[5])
 		param->number_of_times_each_philo_must_eat = ft_atoi(av[5]);
 	else
