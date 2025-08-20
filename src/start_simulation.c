@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:02:52 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/20 16:39:27 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/21 00:07:27 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,9 @@ static t_fork	*fork_init(t_param param)
 	while (++i < param.number_of_philosophers)
 	{
 		(forks[i]).nbr = i + 1;
-		if (pthread_mutex_init(&(forks[i].fork_lock), NULL) < 0)
+		if (pthread_mutex_init(&(forks[i].fork_lock), NULL) != 0)
 			quit_error(ERR_MUTEX_INIT);
 	}
-	printf("fork init: done.\n");
 	return (forks);
 }
 
@@ -72,7 +71,6 @@ static int	param_init(t_param *param, char **av)
 	if (gettimeofday(&time, NULL) < 0)
 		quit_error(ERR_GET_TIME);
 	param->time_start = time.tv_usec / 1000 + time.tv_sec * 1000 + TIME_START;
-	printf("param init: done.\n");
 	return (1);
 }
 
@@ -87,8 +85,7 @@ int	start_simulation(char **av)
 		quit_error(ERR_INIT);
 	forks = fork_init(param);
 	philos = philo_init(param, forks);
-	if (!thread_run(philos))
-		quit_error("Error: threads has just explode\n");
+	thread_run(philos);
 	free_forks(forks, param);
 	free(philos);
 	return (1);
