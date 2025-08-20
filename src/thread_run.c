@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:11:43 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/21 00:02:35 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/21 00:13:00 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,17 @@ bool	thread_run(t_philosoph *philo)
 	pthread_t	*threads;
 	int			i;
 	int			nbr;
-	bool		success;
 
-	success = true;
 	nbr = (*philo).param.number_of_philosophers;
 	threads = malloc(sizeof(pthread_t) * nbr);
 	if (!threads)
 		quit_error(ERR_MALLOC);
 	i = -1;
-	while (success && ++i < nbr)
-	{
-		if (pthread_create(&(threads[i]), NULL,
-				&routine, &(philo[i])) != 0)
-			break ;
-	}
-	while (success && --i > -1)
-	{
-		if (pthread_join(threads[i], NULL) != 0)
-			break ;
-	}
+	while (++i < nbr && pthread_create(&(threads[i]), NULL,
+			&routine, &(philo[i])) == 0)
+		continue ;
+	while (--i > -1 && pthread_join(threads[i], NULL) == 0)
+		continue ;
 	free(threads);
-	return (success);
+	return (true);
 }
