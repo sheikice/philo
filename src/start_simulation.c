@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:02:52 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/19 17:42:49 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/20 15:56:46 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ static t_philosoph	*philo_init(t_param param, t_fork *forks)
 			(philo[i]).left = &(forks[0]);
 		else
 			(philo[i]).left = &(forks[i + 1]);
-		if (pthread_mutex_init(&(philo[i].meal_eaten.meal_lock), NULL) < 0)
-			quit_error(ERR_MUTEX_INIT);
+		(philo[i]).param = param;
 	}
 	return (philo);
 }
@@ -88,9 +87,9 @@ int	start_simulation(char **av)
 		quit_error(ERR_INIT);
 	forks = fork_init(param);
 	philos = philo_init(param, forks);
-	if (!thread_run(philos, param))
+	if (!thread_run(philos))
 		quit_error("Error: threads has just explode\n");
+	free_forks(forks, param);
 	free(philos);
-	free(forks);
 	return (1);
 }
