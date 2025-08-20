@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:15:45 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/19 17:22:50 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/20 16:04:48 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <sys/select.h>
 # include <unistd.h>
 # include <limits.h>
+# include <signal.h>
 # include <stdbool.h>
 # include <pthread.h>
 # include <stdlib.h>
@@ -41,6 +42,7 @@ typedef struct s_param
 	int	number_of_philosophers;
 	int	time_start;
 	int	time_to_die;
+	int	time_to_think;
 	int	time_to_eat;
 	int	time_to_sleep;
 	int	number_of_times_each_philo_must_eat;
@@ -52,24 +54,20 @@ typedef struct s_fork
 	pthread_mutex_t	fork_lock;
 }	t_fork;
 
-typedef struct s_meal_eaten
-{
-	int				nbr;
-	pthread_mutex_t	meal_lock;
-}	t_meal_eaten;
-
 typedef struct s_philosoph
 {
 	int				nbr;
-	t_meal_eaten	meal_eaten;
 	t_fork			*left;
 	t_fork			*right;
+	t_param			param;
 }	t_philosoph;
 
 void	quit_error(char *str);
 int		start_simulation(char **av);
 int		ft_atoi(const char *str);
 bool	check_params(char **av);
-bool	thread_run(t_philosoph *philo, t_param param);
+void	free_forks(t_fork *fork, t_param param);
+bool	thread_run(t_philosoph *philo);
+void	*routine(void *data);
 
 #endif
