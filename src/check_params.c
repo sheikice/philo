@@ -6,11 +6,19 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 16:53:22 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/20 21:29:28 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/21 17:48:22 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <stdlib.h>
+
+static bool	is_positiv(char *arg)
+{
+	if (ft_atoi(arg) < 0)
+		return (false);
+	return (true);
+}
 
 static bool	is_number(char *arg)
 {
@@ -27,15 +35,17 @@ static bool	is_number(char *arg)
 	return (true);
 }
 
-bool	check_params(char **av)
+void	check_params(char **av)
 {
 	int	i;
 
 	i = 0;
 	while (av[++i])
 	{
-		if (!is_number(av[i]))
-			return (false);
+		if (!is_number(av[i]) || !is_positiv(av[i]))
+		{
+			print_err(ERR_POSNUM_ARG);
+			exit(EXIT_FAILURE);
+		}
 	}
-	return (true);
 }
