@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:15:45 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/21 13:06:13 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/21 13:45:14 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ enum e_state
 	DIE
 };
 
+typedef struct s_end
+{
+	bool			value;
+	pthread_mutex_t	end_lock;
+}	t_end;
+
 typedef struct s_param
 {
 	int				number_of_philosophers;
@@ -53,6 +59,7 @@ typedef struct s_param
 	unsigned long	time_to_eat;
 	unsigned long	time_to_sleep;
 	int				number_of_times_each_philo_must_eat;
+	t_end			thread_end;
 }	t_param;
 
 typedef struct s_fork
@@ -69,13 +76,14 @@ typedef struct s_philosoph
 	t_param			param;
 }	t_philosoph;
 
-void	quit_error(char *str);
-void	start_simulation(char **av);
-int		ft_atoi(const char *str);
 bool	check_params(char **av);
 void	free_forks(t_fork *fork, t_param param);
-bool	thread_run(t_philosoph *philo);
-void	*routine(void *data);
+int		ft_atoi(const char *str);
+void	print_err(char *str);
 bool	print_time(t_param param, enum e_state state, int philo);
+void	quit_error(char *str);
+void	*routine(void *data);
+void	start_simulation(char **av);
+bool	thread_run(t_philosoph *philo);
 
 #endif
