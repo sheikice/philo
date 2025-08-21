@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:11:43 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/21 11:03:44 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/21 13:48:26 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ bool	thread_run(t_philosoph *philo)
 	while (++i < nbr && pthread_create(&(threads[i]), NULL,
 			&routine, &(philo[i])) == 0)
 		continue ;
+	if (i != nbr)
+		print_err(ERR_MALLOC);
 	while (--i > -1 && pthread_join(threads[i], NULL) == 0)
 		continue ;
 	free(threads);

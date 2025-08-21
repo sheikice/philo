@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:02:52 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/21 13:06:25 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/21 13:21:34 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,9 @@ static int	param_init(t_param *param, char **av)
 	if (gettimeofday(&time, NULL) != 0)
 		quit_error(ERR_GET_TIME);
 	param->time_start = time.tv_usec / 1000 + time.tv_sec * 1000 + TIME_START;
+	param->thread_end.value = false;
+	if (pthread_mutex_init(&(param->thread_end.end_lock), NULL) != 0)
+		quit_error(ERR_MUTEX_INIT);
 	return (1);
 }
 
