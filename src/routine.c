@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:59:36 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/20 23:15:27 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/21 11:36:30 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,17 @@ static bool	philo_eat(t_param param, int philo)
 void	*routine(void *data)
 {
 	int	meals;
+	int	eaten;;
 	int	philo;
 
+	eaten = 0;
 	meals = ((t_philosoph *)data)->param.number_of_times_each_philo_must_eat;
 	philo = ((t_philosoph *)data)->nbr;
-	while (meals != 0)
+	while (1)
 	{
 		philo_eat(((t_philosoph *)data)->param, philo);
-		meals--;
-		if (meals == 0)
+		eaten++;
+		if (meals && (eaten == meals))
 			break ;
 		philo_sleep(((t_philosoph *)data)->param, philo);
 		print_time(((t_philosoph *)data)->param, THINK, philo);
