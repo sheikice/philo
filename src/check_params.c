@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 16:53:22 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/21 18:44:18 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/21 18:46:37 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ bool	check_params(char **av)
 	i = 0;
 	while (av[++i])
 	{
-		value = ft_atoi(av[i]);
 		if (!is_number(av[i]))
 			return (false);
+		value = ft_atoi(av[i]);
 		if (!is_valid_value(value, i))
 			return (false);
 	}
