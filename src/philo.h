@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:15:45 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/21 18:15:16 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/21 18:40:50 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define ERR_MALLOC "Error: malloc failed\n"
 # define ERR_GET_TIME "Error: gettimeofday failed\n"
 # define ERR_NBR_PHILOSOPH "Error: valid number of philosophers is 1 to 200\n"
+# define ERR_NBR_MEAL "Error: valid number of meal is > 0\n"
 # define ERR_INIT "Error: check/init param failed\n"
 # define ERR_MUTEX_INIT "Error: mutex_init failed\n"
 # define ERR_POSNUM_ARG "Error: positiv numeric args recquired\n"
