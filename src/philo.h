@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:15:45 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/21 13:45:14 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/21 17:50:42 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,13 @@
 # define ERR_EAT_LIMIT "Error: invalid number_of_times_each_philo_must_eat\n"
 # define ERR_MALLOC "Error: malloc failed\n"
 # define ERR_GET_TIME "Error: gettimeofday failed\n"
-# define ERR_NBR_PHILOSOPH "Error: minimum number philosopher is 1\n"
+# define ERR_NBR_PHILOSOPH "Error: valid number of philosophers is 1 to 200\n"
 # define ERR_INIT "Error: check/init param failed\n"
 # define ERR_MUTEX_INIT "Error: mutex_init failed\n"
+# define ERR_POSNUM_ARG "Error: positiv numeric args recquired\n"
 // ====== UTILS VAR ============================================================
 # define TIME_START 0
+# define MAX_PHILO 200
 
 enum e_state
 {
@@ -50,6 +52,12 @@ typedef struct s_end
 	bool			value;
 	pthread_mutex_t	end_lock;
 }	t_end;
+
+typedef struct s_is_alive
+{
+	bool			value;
+	pthread_mutex_t	live_lock;
+}	t_is_alive;
 
 typedef struct s_param
 {
@@ -73,11 +81,13 @@ typedef struct s_philosoph
 	int				nbr;
 	t_fork			*left;
 	t_fork			*right;
+	t_is_alive		is_alive;
 	t_param			param;
 }	t_philosoph;
 
-bool	check_params(char **av);
+void	check_params(char **av);
 void	free_forks(t_fork *fork, t_param param);
+void	free_philos(t_philosoph *philos, t_param param);
 int		ft_atoi(const char *str);
 void	print_err(char *str);
 bool	print_time(t_param param, enum e_state state, int philo);

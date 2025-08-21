@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:24:27 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/20 15:53:38 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/21 16:58:54 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,13 @@ void	free_forks(t_fork *fork, t_param param)
 	i = -1;
 	while (++i < param.number_of_philosophers)
 		pthread_mutex_destroy(&(fork[i].fork_lock));
-	free(fork);
+}
+
+void	free_philos(t_philosoph *philo, t_param param)
+{
+	int	i;
+
+	i = -1;
+	while (++i < param.number_of_philosophers)
+		pthread_mutex_destroy(&(philo[i].is_alive.live_lock));
 }

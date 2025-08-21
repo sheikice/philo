@@ -6,22 +6,17 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:02:52 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/21 13:21:34 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/21 17:47:21 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static t_philosoph	*philo_init(t_param param, t_fork *forks)
+static bool	philo_init(t_param param, t_fork *forks, t_philosoph *philo)
 {
-	t_philosoph	*philo;
 	int			i;
 
 	i = -1;
-	philo = malloc(sizeof(t_philosoph) * param.number_of_philosophers);
-	if (!philo)
-		return (NULL);
-	memset(philo, 0, sizeof(t_philosoph) * param.number_of_philosophers);
 	while (++i < param.number_of_philosophers)
 	{
 		(philo[i]).nbr = i + 1;
@@ -31,35 +26,50 @@ static t_philosoph	*philo_init(t_param param, t_fork *forks)
 		else
 			(philo[i]).left = &(forks[i + 1]);
 		(philo[i]).param = param;
+		if (pthread_mutex_init(&(philo[i].is_alive.live_lock), NULL) != 0)
+			break ;
+		(philo[i]).is_alive.value = false;
 	}
-	return (philo);
+	if (i == param.number_of_philosophers)
+		return (true);
+	while (i >= 0)
+	{
+		pthread_mutex_destroy(&(philo[i].is_alive.live_lock));
+		i--;
+	}
+	print_err(ERR_MUTEX_INIT);
+	return (false);
 }
 
-static t_fork	*fork_init(t_param param)
+static bool	fork_init(t_param param, t_fork *forks)
 {
-	t_fork	*forks;
 	int		i;
 
 	i = -1;
-	forks = malloc(sizeof(t_fork) * param.number_of_philosophers);
-	if (!forks)
-		return (NULL);
-	memset(forks, 0, sizeof(t_fork) * param.number_of_philosophers);
 	while (++i < param.number_of_philosophers)
 	{
 		(forks[i]).nbr = i + 1;
 		if (pthread_mutex_init(&(forks[i].fork_lock), NULL) != 0)
-			quit_error(ERR_MUTEX_INIT);
+			break ;
 	}
-	return (forks);
+	if (i == param.number_of_philosophers)
+		return (true);
+	while (i >= 0)
+	{
+		pthread_mutex_destroy(&(forks[i].fork_lock));
+		i--;
+	}
+	print_err(ERR_MUTEX_INIT);
+	return (false);
 }
 
-static int	param_init(t_param *param, char **av)
+static void	param_init(t_param *param, char **av)
 {
 	struct timeval	time;
 
 	param->number_of_philosophers = ft_atoi(av[1]);
-	if (param->number_of_philosophers < 1)
+	if (param->number_of_philosophers < 1
+		|| param->number_of_philosophers > MAX_PHILO)
 		quit_error(ERR_NBR_PHILOSOPH);
 	param->time_to_die = ft_atoi(av[2]) * 1000;
 	param->time_to_eat = ft_atoi(av[3]) * 1000;
@@ -78,33 +88,30 @@ static int	param_init(t_param *param, char **av)
 	param->thread_end.value = false;
 	if (pthread_mutex_init(&(param->thread_end.end_lock), NULL) != 0)
 		quit_error(ERR_MUTEX_INIT);
-	return (1);
 }
 
 void	start_simulation(char **av)
 {
 	t_param		param;
-	t_fork		*forks;
-	t_philosoph	*philos;
+	t_fork		forks[MAX_PHILO];
+	t_philosoph	philos[MAX_PHILO];
 
 	memset(&param, 0, sizeof(t_param));
-	if (!check_params(av) || !param_init(&param, av))
-		quit_error(ERR_INIT);
-	forks = fork_init(param);
-	if (!forks)
-		quit_error(ERR_MALLOC);
-	philos = philo_init(param, forks);
-	if (!philos)
+	check_params(av);
+	param_init(&param, av);
+	if (!fork_init(param, forks))
 	{
-		free_forks(forks, param);
-		quit_error(ERR_MALLOC);
+		pthread_mutex_destroy(&(param.thread_end.end_lock));
+		exit(EXIT_FAILURE);
 	}
-	if (!thread_run(philos))
+	if (!philo_init(param, forks, philos))
 	{
+		pthread_mutex_destroy(&(param.thread_end.end_lock));
 		free_forks(forks, param);
-		free(philos);
-		quit_error(ERR_MALLOC);
+		exit(EXIT_FAILURE);
 	}
+	thread_run(philos);
 	free_forks(forks, param);
-	free(philos);
+	free_philos(philos, param);
+	pthread_mutex_destroy(&(param.thread_end.end_lock));
 }
