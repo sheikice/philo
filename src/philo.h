@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:15:45 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/21 10:59:21 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/21 13:06:13 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct s_philosoph
 }	t_philosoph;
 
 void	quit_error(char *str);
-void		start_simulation(char **av);
+void	start_simulation(char **av);
 int		ft_atoi(const char *str);
 bool	check_params(char **av);
 void	free_forks(t_fork *fork, t_param param);

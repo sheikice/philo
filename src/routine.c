@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:59:36 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/21 11:36:30 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/21 13:06:49 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static bool	philo_eat(t_param param, int philo)
 void	*routine(void *data)
 {
 	int	meals;
-	int	eaten;;
+	int	eaten;
 	int	philo;
 
 	eaten = 0;

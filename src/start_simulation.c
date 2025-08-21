@@ -6,12 +6,11 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:02:52 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/21 13:00:35 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/21 13:06:25 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-#include <stdlib.h>
 
 static t_philosoph	*philo_init(t_param param, t_fork *forks)
 {
