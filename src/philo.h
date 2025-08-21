@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:15:45 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/21 17:50:42 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/21 18:15:16 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ typedef struct s_philosoph
 	t_param			param;
 }	t_philosoph;
 
-void	check_params(char **av);
+bool	check_params(char **av);
 void	free_forks(t_fork *fork, t_param param);
 void	free_philos(t_philosoph *philos, t_param param);
 int		ft_atoi(const char *str);
@@ -93,7 +93,7 @@ void	print_err(char *str);
 bool	print_time(t_param param, enum e_state state, int philo);
 void	quit_error(char *str);
 void	*routine(void *data);
-void	start_simulation(char **av);
+bool	start_simulation(char **av);
 bool	thread_run(t_philosoph *philo);
 
 #endif
