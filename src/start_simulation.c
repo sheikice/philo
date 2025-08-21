@@ -6,11 +6,12 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:02:52 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/21 00:07:27 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/21 11:33:41 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <stdlib.h>
 
 static t_philosoph	*philo_init(t_param param, t_fork *forks)
 {
@@ -20,7 +21,7 @@ static t_philosoph	*philo_init(t_param param, t_fork *forks)
 	i = -1;
 	philo = malloc(sizeof(t_philosoph) * param.number_of_philosophers);
 	if (!philo)
-		quit_error(ERR_MALLOC);
+		return (NULL);
 	memset(philo, 0, sizeof(t_philosoph) * param.number_of_philosophers);
 	while (++i < param.number_of_philosophers)
 	{
@@ -43,7 +44,7 @@ static t_fork	*fork_init(t_param param)
 	i = -1;
 	forks = malloc(sizeof(t_fork) * param.number_of_philosophers);
 	if (!forks)
-		quit_error(ERR_MALLOC);
+		return (NULL);
 	memset(forks, 0, sizeof(t_fork) * param.number_of_philosophers);
 	while (++i < param.number_of_philosophers)
 	{
@@ -64,17 +65,21 @@ static int	param_init(t_param *param, char **av)
 	param->time_to_die = ft_atoi(av[2]) * 1000;
 	param->time_to_eat = ft_atoi(av[3]) * 1000;
 	param->time_to_sleep = ft_atoi(av[4]) * 1000;
-	if (av[5])
-		param->number_of_times_each_philo_must_eat = ft_atoi(av[5]);
-	else
+	if (!av[5])
 		param->number_of_times_each_philo_must_eat = 0;
+	else
+	{
+		param->number_of_times_each_philo_must_eat = ft_atoi(av[5]);
+		if (param->number_of_times_each_philo_must_eat == 0)
+			exit(EXIT_SUCCESS);
+	}
 	if (gettimeofday(&time, NULL) < 0)
 		quit_error(ERR_GET_TIME);
 	param->time_start = time.tv_usec / 1000 + time.tv_sec * 1000 + TIME_START;
 	return (1);
 }
 
-int	start_simulation(char **av)
+void	start_simulation(char **av)
 {
 	t_param		param;
 	t_fork		*forks;
@@ -84,9 +89,20 @@ int	start_simulation(char **av)
 	if (!check_params(av) || !param_init(&param, av))
 		quit_error(ERR_INIT);
 	forks = fork_init(param);
+	if (!forks)
+		quit_error(ERR_MALLOC);
 	philos = philo_init(param, forks);
-	thread_run(philos);
+	if (!philos)
+	{
+		free_forks(forks, param);
+		quit_error(ERR_MALLOC);
+	}
+	if (!thread_run(philos))
+	{
+		free_forks(forks, param);
+		free(philos);
+		quit_error(ERR_MALLOC);
+	}
 	free_forks(forks, param);
 	free(philos);
-	return (1);
 }
