@@ -6,87 +6,74 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:02:52 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/21 18:13:51 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/23 19:03:34 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static bool	philo_init(t_param param, t_fork *forks, t_philosoph *philo)
+static void	philo_init(t_param *param, t_fork *forks, t_philosoph *philo)
 {
 	int			i;
 
 	i = -1;
-	while (++i < param.number_of_philosophers)
+	while (++i < param->number_of_philosophers)
 	{
+		memset(&(philo[i]), 0, sizeof(t_philosoph));
 		(philo[i]).nbr = i + 1;
 		(philo[i]).right = &(forks[i]);
-		if (i == param.number_of_philosophers - 1)
+		if (i == param->number_of_philosophers - 1)
 			(philo[i]).left = &(forks[0]);
 		else
 			(philo[i]).left = &(forks[i + 1]);
 		(philo[i]).param = param;
-		if (pthread_mutex_init(&(philo[i].is_alive.live_lock), NULL) != 0)
-			break ;
-		(philo[i]).is_alive.value = false;
 	}
-	if (i == param.number_of_philosophers)
-		return (true);
-	while (i >= 0)
-	{
-		pthread_mutex_destroy(&(philo[i].is_alive.live_lock));
-		i--;
-	}
-	print_err(ERR_MUTEX_INIT);
-	return (false);
 }
 
-static bool	fork_init(t_param param, t_fork *forks)
+static bool	fork_init(t_param *param, t_fork *forks)
 {
 	int		i;
 
 	i = -1;
-	while (++i < param.number_of_philosophers)
+	while (++i < param->number_of_philosophers)
 	{
+		memset(&(forks[i]), 0, sizeof(t_fork));
 		(forks[i]).nbr = i + 1;
 		if (pthread_mutex_init(&(forks[i].fork_lock), NULL) != 0)
 			break ;
 	}
-	if (i == param.number_of_philosophers)
+	if (i == param->number_of_philosophers)
 		return (true);
 	while (i >= 0)
 	{
 		pthread_mutex_destroy(&(forks[i].fork_lock));
 		i--;
 	}
-	print_err(ERR_MUTEX_INIT);
+	print_msg(ERR_MUTEX_INIT, STDERR_FILENO);
 	return (false);
 }
 
 static bool	param_init(t_param *param, char **av)
 {
-	struct timeval	time;
-
+	if (pthread_mutex_init(&(param->write), NULL) != 0)
+		return (false);
+	if (pthread_mutex_init(&(param->thread_end.end_lock), NULL) != 0)
+	{
+		pthread_mutex_destroy(&(param->write));
+		return (false);
+	}
+	if (pthread_mutex_init(&(param->philo_full.full_lock), NULL) != 0)
+	{
+		pthread_mutex_destroy(&(param->thread_end.end_lock));
+		pthread_mutex_destroy(&(param->write));
+		return (false);
+	}
 	param->number_of_philosophers = ft_atoi(av[1]);
 	param->time_to_die = ft_atoi(av[2]) * 1000;
 	param->time_to_eat = ft_atoi(av[3]) * 1000;
 	param->time_to_sleep = ft_atoi(av[4]) * 1000;
-	if (!av[5])
-		param->number_of_times_each_philo_must_eat = 0;
-	else
+	if (av[5])
 		param->number_of_times_each_philo_must_eat = ft_atoi(av[5]);
-	if (gettimeofday(&time, NULL) != 0)
-	{
-		print_err(ERR_GET_TIME);
-		return (false);
-	}
-	param->time_start = time.tv_usec / 1000 + time.tv_sec * 1000 + TIME_START;
-	param->thread_end.value = false;
-	if (pthread_mutex_init(&(param->thread_end.end_lock), NULL) != 0)
-	{
-		print_err(ERR_MUTEX_INIT);
-		return (false);
-	}
 	return (true);
 }
 
@@ -99,20 +86,14 @@ bool	start_simulation(char **av)
 	memset(&param, 0, sizeof(t_param));
 	if (!check_params(av) || !param_init(&param, av))
 		return (false);
-	if (!fork_init(param, forks))
+	if (!fork_init(&param, forks))
 	{
-		pthread_mutex_destroy(&(param.thread_end.end_lock));
+		free_mutex(param);
 		return (false);
 	}
-	if (!philo_init(param, forks, philos))
-	{
-		pthread_mutex_destroy(&(param.thread_end.end_lock));
-		free_forks(forks, param);
-		return (false);
-	}
+	philo_init(&param, forks, philos);
 	thread_run(philos);
 	free_forks(forks, param);
-	free_philos(philos, param);
-	pthread_mutex_destroy(&(param.thread_end.end_lock));
+	free_mutex(param);
 	return (true);
 }
