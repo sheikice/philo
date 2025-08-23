@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:15:45 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/21 18:40:50 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/23 19:00:52 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,28 +37,35 @@
 # define ERR_MUTEX_INIT "Error: mutex_init failed\n"
 # define ERR_POSNUM_ARG "Error: positiv numeric args recquired\n"
 // ====== UTILS VAR ============================================================
-# define TIME_START 0
+# define TIME_START 200
 # define MAX_PHILO 200
+// ====== PRINT STATUS ============================================================
+# define SLEEP_MSG "%lu ms %d is sleeping\n"
+# define DIE_MSG "%lu ms %d died\n"
+# define THINK_MSG "%lu ms %d is thinking\n"
+# define FORK_MSG "%lu ms %d has taken a fork\n"
+# define EAT_MSG "%lu ms %d has taken a fork\n%lu ms %d is eating\n"
 
 enum e_state
 {
 	EAT,
+	FORK,
 	SLEEP,
 	THINK,
 	DIE
 };
 
+typedef struct s_full
+{
+	int				philos_full;
+	pthread_mutex_t	full_lock;
+}	t_full;
+
 typedef struct s_end
 {
-	bool			value;
+	bool				value;
 	pthread_mutex_t	end_lock;
 }	t_end;
-
-typedef struct s_is_alive
-{
-	bool			value;
-	pthread_mutex_t	live_lock;
-}	t_is_alive;
 
 typedef struct s_param
 {
@@ -69,6 +76,9 @@ typedef struct s_param
 	unsigned long	time_to_sleep;
 	int				number_of_times_each_philo_must_eat;
 	t_end			thread_end;
+	t_full			philo_full;
+	bool			start;
+	pthread_mutex_t	write;
 }	t_param;
 
 typedef struct s_fork
@@ -82,19 +92,20 @@ typedef struct s_philosoph
 	int				nbr;
 	t_fork			*left;
 	t_fork			*right;
-	t_is_alive		is_alive;
-	t_param			param;
+	unsigned long	time_last_meal;
+	t_param			*param;
 }	t_philosoph;
 
-bool	check_params(char **av);
-void	free_forks(t_fork *fork, t_param param);
-void	free_philos(t_philosoph *philos, t_param param);
-int		ft_atoi(const char *str);
-void	print_err(char *str);
-bool	print_time(t_param param, enum e_state state, int philo);
-void	quit_error(char *str);
-void	*routine(void *data);
-bool	start_simulation(char **av);
-bool	thread_run(t_philosoph *philo);
+bool			check_params(char **av);
+void			free_forks(t_fork *fork, t_param param);
+void			free_mutex(t_param param);
+int				ft_atoi(const char *str);
+int				print_msg(char *str, int fd);
+int				print_status(char *str, int nbr, pthread_mutex_t *lock);
+unsigned long	time_get(void);
+void			quit_error(char *str);
+void			*routine(void *data);
+bool			start_simulation(char **av);
+bool			thread_run(t_philosoph *philo);
 
 #endif
