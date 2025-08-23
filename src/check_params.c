@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 16:53:22 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/21 18:46:37 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/23 14:38:16 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,17 @@ static bool	is_valid_value(int value, int i)
 {
 	if (value < 0)
 	{
-		print_err(ERR_POSNUM_ARG);
+		print_msg(ERR_POSNUM_ARG, STDERR_FILENO);
 		return (false);
 	}
 	if (i == 1 && (value < 1 || value > 200))
 	{
-		print_err(ERR_NBR_PHILOSOPH);
+		print_msg(ERR_NBR_PHILOSOPH, STDERR_FILENO);
 		return (false);
 	}
 	if (i == 5 && value < 1)
 	{
-		print_err(ERR_NBR_MEAL);
+		print_msg(ERR_NBR_MEAL, STDERR_FILENO);
 		return (false);
 	}
 	return (true);
@@ -39,14 +39,14 @@ static bool	is_number(char *arg)
 	i = 0;
 	if (!(arg[i] > '0' && arg[i] <= '9') && !(arg[i] == '0' && !(arg[i + 1])))
 	{
-		print_err(ERR_POSNUM_ARG);
+		print_msg(ERR_POSNUM_ARG, STDERR_FILENO);
 		return (false);
 	}
 	while (arg[++i])
 	{
 		if (arg[i] < '0' || arg[i] > '9')
 		{
-			print_err(ERR_POSNUM_ARG);
+			print_msg(ERR_POSNUM_ARG, STDERR_FILENO);
 			return (false);
 		}
 	}
