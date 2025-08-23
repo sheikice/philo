@@ -6,7 +6,7 @@
 #    By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/14 18:44:28 by jwuille           #+#    #+#              #
-#    Updated: 2025/08/21 13:46:19 by jwuille          ###   ########.fr        #
+#    Updated: 2025/08/22 16:55:53 by jwuille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,10 +26,10 @@ SRC =	quit_error.c \
 
 
 CC = cc -MD
-# ASAN = 
-
-# I = -Iincludes/mandatory
+THREAD = -lpthread
+ASAN = -fsanitize=thread
 CFLAGS = -Wall -Werror -Wextra -g3
+CFLAGS += $(THREAD) $(ASAN)
 NAME = philo
 
 OBJ = $(addprefix $(OBJ_DIR)/,$(SRC:.c=.o))
