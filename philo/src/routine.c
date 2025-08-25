@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 15:59:36 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/25 19:50:17 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/25 20:32:44 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	*routine(void *data)
 	((t_philosoph *)data)->meal.time = time_get();
 	pthread_mutex_unlock(&(((t_philosoph *)data)->meal.time_lock));
 	if ((((t_philosoph *)data)->nbr % 2) == 0)
-		usleep(4000);
+		usleep(5500);
 	if (((t_philosoph *)data)->nbr > 1)
 		usleep(500);
 	while (philo_actions(((t_philosoph *)data)->param,
