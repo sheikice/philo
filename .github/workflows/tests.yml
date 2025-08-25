@@ -13,7 +13,7 @@ jobs:
     - uses: actions/checkout@v3
     - name: mandatory tests
       # J'ai ajouté quelques commandes pour observer ce qu'il se passe dans le runner
-      run: ls -lR; make re
+      run: cd philo; ls -lR; make re
       # On aurait pu faire simplement 
       # run: make; ./tester/test m
       shell: bash
