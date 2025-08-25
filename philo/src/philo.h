@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:15:45 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/25 19:54:57 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/25 20:57:53 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,15 @@
 # define ERR_MUTEX_INIT "Error: mutex_init failed\n"
 # define ERR_POSNUM_ARG "Error: positiv numeric args recquired\n"
 // ====== UTILS VAR ============================================================
-# define TIME_START 3450
+# define TIME_CHECK 510
+# define TIME_DEATH 1800
+# define TIME_ODD 5500
+# define TIME_NO_FIRST 500
+// ====== LIMIT VAL ============================================================
+# define MIN_PHILO 1
+# define MIN_MEAL 1
 # define MAX_PHILO 200
-// ====== PRINT STATUS ========================================================
+// ====== PRINT STATUS =========================================================
 # define SLEEP_MSG "%lu ms %d is sleeping\n"
 # define DIE_MSG "%lu ms %d died\n"
 # define THINK_MSG "%lu ms %d is thinking\n"

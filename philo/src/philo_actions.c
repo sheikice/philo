@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 16:00:52 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/25 19:39:45 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/25 20:59:05 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static bool	meal_update(t_philosoph *philo)
 			pthread_mutex_unlock(&(philo->left->fork_lock));
 			return (false);
 		}
-		usleep(330);
+		usleep(TIME_CHECK);
 	}
 	return (true);
 }
@@ -105,7 +105,7 @@ bool	philo_actions(t_param *param, t_philosoph *philo)
 	{
 		if (end_check(param) || is_dead(philo))
 			return (false);
-		usleep(330);
+		usleep(TIME_CHECK);
 	}
 	print_status(THINK_MSG, philo->nbr, &(param->write));
 	return (true);

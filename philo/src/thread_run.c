@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:11:43 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/25 19:53:33 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/25 20:49:12 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static bool	is_philo_dead(t_philosoph *philo)
 	if (res)
 	{
 		simulation_end(philo->param);
-		usleep(1800);
+		usleep(TIME_DEATH);
 		print_status(DIE_MSG, philo->nbr, &(philo->param->write));
 	}
 	return (res);
@@ -53,7 +53,7 @@ static void	check_end_conditions(t_param *param, t_philosoph *philos)
 	i = -1;
 	while (1)
 	{
-		usleep(510);
+		usleep(TIME_CHECK);
 		if (is_philo_dead(&(philos[++i])))
 			return ;
 		if (param->number_of_times_each_philo_must_eat
@@ -92,7 +92,7 @@ void	thread_run(t_philosoph *philo)
 		success = false;
 		simulation_end(philo->param);
 	}
-	while (--i > -1 && pthread_join(threads[i], NULL) == 0)
+	while (--i >= 0 && pthread_join(threads[i], NULL) == 0)
 		continue ;
 	if (success == false)
 		print_msg(ERR_MALLOC, STDERR_FILENO);

@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 16:53:22 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/23 14:38:16 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/25 20:58:10 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ static bool	is_valid_value(int value, int i)
 		print_msg(ERR_POSNUM_ARG, STDERR_FILENO);
 		return (false);
 	}
-	if (i == 1 && (value < 1 || value > 200))
+	if (i == 1 && (value < MIN_PHILO || value > MAX_PHILO))
 	{
 		print_msg(ERR_NBR_PHILOSOPH, STDERR_FILENO);
 		return (false);
 	}
-	if (i == 5 && value < 1)
+	if (i == 5 && value < MIN_MEAL)
 	{
 		print_msg(ERR_NBR_MEAL, STDERR_FILENO);
 		return (false);
