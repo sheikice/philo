@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 16:24:27 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/25 12:35:37 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/25 16:39:40 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,5 @@ void	free_mutex(t_param *param)
 {
 	pthread_mutex_destroy(&(param->write));
 	pthread_mutex_destroy(&(param->thread_end.end_lock));
+	pthread_mutex_destroy(&(param->thread_start.start_lock));
 }

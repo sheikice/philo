@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:02:52 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/25 12:36:05 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/25 16:39:07 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,12 @@ static bool	param_init(t_param *param, char **av)
 	if (pthread_mutex_init(&(param->thread_end.end_lock), NULL) != 0)
 	{
 		pthread_mutex_destroy(&(param->write));
+		return (false);
+	}
+	if (pthread_mutex_init(&(param->thread_start.start_lock), NULL) != 0)
+	{
+		pthread_mutex_destroy(&(param->write));
+		pthread_mutex_destroy(&(param->thread_end.end_lock));
 		return (false);
 	}
 	param->number_of_philosophers = ft_atoi(av[1]);

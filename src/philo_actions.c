@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 16:00:52 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/25 11:55:00 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/25 19:39:45 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ static bool	meal_update(t_philosoph *philo)
 	unsigned long	eat_time;
 
 	print_status(EAT_MSG, philo->nbr, &(philo->param->write));
-	pthread_mutex_lock(&(philo->meal.time_lock));
 	eat_time = time_get();
+	pthread_mutex_lock(&(philo->meal.time_lock));
 	philo->meal.time = eat_time;
 	eat_time += philo->param->time_to_eat;
 	(philo->meal.eaten)++;
@@ -58,7 +58,7 @@ static bool	meal_update(t_philosoph *philo)
 			pthread_mutex_unlock(&(philo->left->fork_lock));
 			return (false);
 		}
-		usleep(300);
+		usleep(330);
 	}
 	return (true);
 }
@@ -68,22 +68,12 @@ static bool	eat(t_philosoph *philo, t_param *param)
 	if (philo->left->nbr > philo->right->nbr)
 	{
 		pthread_mutex_lock(&(philo->left->fork_lock));
-		if (is_dead(philo))
-		{
-			pthread_mutex_unlock(&(philo->left->fork_lock));
-			return (false);
-		}
 		print_status(FORK_MSG, philo->nbr, &(param->write));
 		pthread_mutex_lock(&(philo->right->fork_lock));
 	}
 	else
 	{
 		pthread_mutex_lock(&(philo->right->fork_lock));
-		if (is_dead(philo))
-		{
-			pthread_mutex_unlock(&(philo->right->fork_lock));
-			return (false);
-		}
 		print_status(FORK_MSG, philo->nbr, &(param->write));
 		if (philo->param->number_of_philosophers < 2)
 		{
@@ -115,7 +105,7 @@ bool	philo_actions(t_param *param, t_philosoph *philo)
 	{
 		if (end_check(param) || is_dead(philo))
 			return (false);
-		usleep(100);
+		usleep(330);
 	}
 	print_status(THINK_MSG, philo->nbr, &(param->write));
 	return (true);

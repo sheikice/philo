@@ -6,13 +6,12 @@
 #    By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/14 18:44:28 by jwuille           #+#    #+#              #
-#    Updated: 2025/08/25 12:14:06 by jwuille          ###   ########.fr        #
+#    Updated: 2025/08/25 16:16:25 by jwuille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC_DIR = src
 OBJ_DIR = obj
-
 
 SRC =	quit_error.c \
 		start_simulation.c \
@@ -25,9 +24,8 @@ SRC =	quit_error.c \
 		print.c \
 		main.c
 
-
 CC = cc -MD
-THREAD = -lpthread
+THREAD = -pthread
 # ASAN = -fsanitize=thread
 CFLAGS = -Wall -Werror -Wextra -g3
 CFLAGS += $(THREAD) $(ASAN)

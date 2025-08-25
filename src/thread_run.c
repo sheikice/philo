@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:11:43 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/25 11:34:42 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/25 19:53:33 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static bool	is_philo_dead(t_philosoph *philo)
 	if (res)
 	{
 		simulation_end(philo->param);
-		usleep(500);
+		usleep(1800);
 		print_status(DIE_MSG, philo->nbr, &(philo->param->write));
 	}
 	return (res);
@@ -53,7 +53,7 @@ static void	check_end_conditions(t_param *param, t_philosoph *philos)
 	i = -1;
 	while (1)
 	{
-		usleep(500);
+		usleep(510);
 		if (is_philo_dead(&(philos[++i])))
 			return ;
 		if (param->number_of_times_each_philo_must_eat
@@ -80,10 +80,11 @@ void	thread_run(t_philosoph *philo)
 	success = true;
 	nbr = (*philo).param->number_of_philosophers;
 	i = -1;
-	philo->param->time_start = time_get();
+	pthread_mutex_lock(&(philo->param->thread_start.start_lock));
 	while (++i < nbr && pthread_create(&(threads[i]), NULL,
 			&routine, &(philo[i])) == 0)
 		continue ;
+	pthread_mutex_unlock(&(philo->param->thread_start.start_lock));
 	if (i == nbr)
 		check_end_conditions(philo->param, philo);
 	else

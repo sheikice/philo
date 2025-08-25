@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:15:45 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/25 12:35:50 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/25 19:54:57 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@
 # define ERR_MUTEX_INIT "Error: mutex_init failed\n"
 # define ERR_POSNUM_ARG "Error: positiv numeric args recquired\n"
 // ====== UTILS VAR ============================================================
-# define TIME_START 200
+# define TIME_START 3450
 # define MAX_PHILO 200
-// ====== PRINT STATUS ============================================================
+// ====== PRINT STATUS ========================================================
 # define SLEEP_MSG "%lu ms %d is sleeping\n"
 # define DIE_MSG "%lu ms %d died\n"
 # define THINK_MSG "%lu ms %d is thinking\n"
@@ -68,6 +68,12 @@ typedef struct s_dead
 	pthread_mutex_t		dead_lock;
 }	t_dead;
 
+typedef struct s_start
+{
+	bool				value;
+	pthread_mutex_t		start_lock;
+}	t_start;
+
 typedef struct s_end
 {
 	bool				value;
@@ -83,6 +89,7 @@ typedef struct s_param
 	unsigned long	time_to_sleep;
 	int				number_of_times_each_philo_must_eat;
 	t_end			thread_end;
+	t_start			thread_start;
 	int				philo_full;
 	pthread_mutex_t	write;
 }	t_param;
