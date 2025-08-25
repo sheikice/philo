@@ -6,7 +6,7 @@
 #    By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/14 18:44:28 by jwuille           #+#    #+#              #
-#    Updated: 2025/08/24 16:01:59 by jwuille          ###   ########.fr        #
+#    Updated: 2025/08/25 12:14:06 by jwuille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRC =	quit_error.c \
 
 CC = cc -MD
 THREAD = -lpthread
-ASAN = -fsanitize=thread
+# ASAN = -fsanitize=thread
 CFLAGS = -Wall -Werror -Wextra -g3
 CFLAGS += $(THREAD) $(ASAN)
 NAME = philo

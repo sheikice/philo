@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:02:52 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/24 22:50:17 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/25 12:36:05 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ bool	start_simulation(char **av)
 		return (false);
 	if (!fork_init(&param, forks))
 	{
-		free_mutex(param);
+		free_mutex(&param);
 		return (false);
 	}
 	if (philo_init(&param, forks, philos))
@@ -100,6 +100,6 @@ bool	start_simulation(char **av)
 		free_philos(philos, param);
 	}
 	free_forks(forks, param);
-	free_mutex(param);
+	free_mutex(&param);
 	return (true);
 }
