@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:15:45 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/23 19:00:52 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/25 11:34:13 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,16 +55,23 @@ enum e_state
 	DIE
 };
 
-typedef struct s_full
+typedef struct s_meal
 {
-	int				philos_full;
-	pthread_mutex_t	full_lock;
-}	t_full;
+	unsigned long	time;
+	pthread_mutex_t	time_lock;
+	int				eaten;
+}	t_meal;
+
+typedef struct s_dead
+{
+	bool				value;
+	pthread_mutex_t		dead_lock;
+}	t_dead;
 
 typedef struct s_end
 {
 	bool				value;
-	pthread_mutex_t	end_lock;
+	pthread_mutex_t		end_lock;
 }	t_end;
 
 typedef struct s_param
@@ -76,8 +83,7 @@ typedef struct s_param
 	unsigned long	time_to_sleep;
 	int				number_of_times_each_philo_must_eat;
 	t_end			thread_end;
-	t_full			philo_full;
-	bool			start;
+	int				philo_full;
 	pthread_mutex_t	write;
 }	t_param;
 
@@ -92,20 +98,24 @@ typedef struct s_philosoph
 	int				nbr;
 	t_fork			*left;
 	t_fork			*right;
-	unsigned long	time_last_meal;
+	t_meal			meal;
+	bool			full_checked;
+	t_dead			is_dead;
 	t_param			*param;
 }	t_philosoph;
 
 bool			check_params(char **av);
 void			free_forks(t_fork *fork, t_param param);
 void			free_mutex(t_param param);
+void			free_philos(t_philosoph *philo, t_param param);
 int				ft_atoi(const char *str);
+bool			philo_actions(t_param *param, t_philosoph *philo);
 int				print_msg(char *str, int fd);
 int				print_status(char *str, int nbr, pthread_mutex_t *lock);
 unsigned long	time_get(void);
 void			quit_error(char *str);
 void			*routine(void *data);
 bool			start_simulation(char **av);
-bool			thread_run(t_philosoph *philo);
+void			thread_run(t_philosoph *philo);
 
 #endif
