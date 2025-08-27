@@ -6,7 +6,7 @@
 #    By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/08/14 18:44:28 by jwuille           #+#    #+#              #
-#    Updated: 2025/08/25 16:16:25 by jwuille          ###   ########.fr        #
+#    Updated: 2025/08/27 13:53:13 by jwuille          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRC =	quit_error.c \
 		routine.c \
 		philo_actions.c \
 		print.c \
+		end_check.c \
 		main.c
 
 CC = cc -MD

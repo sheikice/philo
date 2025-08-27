@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/20 16:30:25 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/23 18:32:15 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/27 15:21:28 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,21 @@ unsigned long	time_get(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-int	print_status(char *str, int nbr, pthread_mutex_t *lock)
+void	print_end(char *str, int nbr, pthread_mutex_t *lock)
 {
+	pthread_mutex_lock(lock);
+	printf(str, time_get(), nbr);
+	pthread_mutex_unlock(lock);
+}
+
+bool	print_status(char *str, int nbr, pthread_mutex_t *lock, t_param *param)
+{
+	if (end_check(param))
+		return (false);
 	pthread_mutex_lock(lock);
 	printf(str, time_get(), nbr, time_get(), nbr);
 	pthread_mutex_unlock(lock);
-	return (EXIT_SUCCESS);
+	return (true);
 }
 
 int	print_msg(char *str, int fd)
