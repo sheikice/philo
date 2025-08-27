@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:11:43 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/25 20:49:12 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/27 15:22:52 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,15 @@ static bool	is_philo_dead(t_philosoph *philo)
 {
 	bool	res;
 
-	pthread_mutex_lock(&(philo->is_dead.dead_lock));
-	res = philo->is_dead.value;
-	pthread_mutex_unlock(&(philo->is_dead.dead_lock));
+	res = false;
+	pthread_mutex_lock(&(philo->meal.time_lock));
+	if (philo->meal.time + philo->param->time_to_die < time_get())
+		res = true;
+	pthread_mutex_unlock(&(philo->meal.time_lock));
 	if (res)
 	{
 		simulation_end(philo->param);
-		usleep(TIME_DEATH);
-		print_status(DIE_MSG, philo->nbr, &(philo->param->write));
+		print_end(DIE_MSG, philo->nbr, &(philo->param->write));
 	}
 	return (res);
 }
@@ -85,6 +86,7 @@ void	thread_run(t_philosoph *philo)
 			&routine, &(philo[i])) == 0)
 		continue ;
 	pthread_mutex_unlock(&(philo->param->thread_start.start_lock));
+	usleep(55000);
 	if (i == nbr)
 		check_end_conditions(philo->param, philo);
 	else
