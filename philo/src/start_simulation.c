@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/18 15:02:52 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/25 20:45:49 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/27 14:54:16 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,13 @@ static bool	philo_init(t_param *param, t_fork *forks, t_philosoph *philo)
 		else if (param->number_of_philosophers > 1)
 			(philo[i]).left = &(forks[i + 1]);
 		(philo[i]).param = param;
-		if (pthread_mutex_init(&(philo[i].meal.time_lock), NULL) != 0
-			|| pthread_mutex_init(&(philo[i].is_dead.dead_lock), NULL) != 0)
+		if (pthread_mutex_init(&(philo[i].meal.time_lock), NULL) != 0)
 			break ;
 	}
 	if (i == param->number_of_philosophers)
 		return (true);
 	while (--i >= 0)
-	{
 		pthread_mutex_destroy(&(philo[i]).meal.time_lock);
-		pthread_mutex_destroy(&(philo[i]).is_dead.dead_lock);
-	}
 	return (false);
 }
 
