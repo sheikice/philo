@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/24 16:00:52 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/27 15:25:24 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/30 16:04:38 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ static bool	meal_update(t_philosoph *philo)
 
 static bool	eat(t_philosoph *philo, t_param *param)
 {
-	if (philo->left->nbr > philo->right->nbr)
+	if (((param->number_of_philosophers % 2) == 0)
+		&& (philo->left->nbr > philo->right->nbr))
 	{
 		pthread_mutex_lock(&(philo->left->fork_lock));
 		if (!print_status(FORK_MSG, philo->nbr, &(param->write), param))
