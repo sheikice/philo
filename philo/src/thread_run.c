@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/19 17:11:43 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/30 16:32:34 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/27 15:22:52 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	thread_run(t_philosoph *philo)
 			&routine, &(philo[i])) == 0)
 		continue ;
 	pthread_mutex_unlock(&(philo->param->thread_start.start_lock));
-	usleep(MAIN_WAIT);
+	usleep(55000);
 	if (i == nbr)
 		check_end_conditions(philo->param, philo);
 	else

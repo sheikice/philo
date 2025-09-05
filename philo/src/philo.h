@@ -6,7 +6,7 @@
 /*   By: jwuille <jwuille@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/08/16 23:15:45 by jwuille           #+#    #+#             */
-/*   Updated: 2025/08/30 16:32:32 by jwuille          ###   ########.fr       */
+/*   Updated: 2025/08/27 15:21:52 by jwuille          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@
 # define TIME_DEATH 1800
 # define TIME_ODD 5500
 # define TIME_NO_FIRST 500
-# define MAIN_WAIT 55000
 // ====== LIMIT VAL ============================================================
 # define MIN_PHILO 1
 # define MIN_MEAL 1
