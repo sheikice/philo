@@ -1,7 +1,7 @@
 #!/bin/bash
 
 clear
-echo "./philo 199 610 200 200"
-echo "idk"
+echo "./philo 199 61 20 20 5000"
+echo "No philo should die"
 sleep 1
-./philo 199 610 200 200 50
+./philo 199 61 20 20 5000
